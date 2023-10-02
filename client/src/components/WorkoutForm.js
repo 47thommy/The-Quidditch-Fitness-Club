@@ -9,6 +9,7 @@ const WorkoutForm = () => {
     sets: "",
     load: "",
   });
+  const [emptyField, setEmptyField] = useState([]);
 
   const [error, setError] = useState(null);
 
@@ -33,7 +34,7 @@ const WorkoutForm = () => {
 
     if (!response.ok) {
       setError(json.message);
-      console.log(error);
+      setEmptyField(json.emptyFields);
     }
     if (response.ok) {
       dispatch({ type: "CREATE_WORKOUTS", payload: json });
@@ -44,6 +45,7 @@ const WorkoutForm = () => {
         load: "",
       });
       setError(null);
+      setEmptyField([]);
     }
   };
   return (
@@ -54,6 +56,7 @@ const WorkoutForm = () => {
         onChange={handleChange}
         name="title"
         value={formData.title}
+        className={emptyField.includes("title") ? "error" : ""}
       />
       <label>Sets</label>
       <input
@@ -61,6 +64,7 @@ const WorkoutForm = () => {
         value={formData.sets}
         name="sets"
         onChange={handleChange}
+        className={emptyField.includes("sets") ? "error" : ""}
       />
       <label>Reps</label>
       <input
@@ -68,6 +72,7 @@ const WorkoutForm = () => {
         value={formData.reps}
         name="reps"
         onChange={handleChange}
+        className={emptyField.includes("reps") ? "error" : ""}
       />
       <label>Load(Kg)</label>
       <input
@@ -75,6 +80,7 @@ const WorkoutForm = () => {
         value={formData.load}
         name="load"
         onChange={handleChange}
+        className={emptyField.includes("load") ? "error" : ""}
       />
       <button>Add Workout</button>
       {error && <div className="error">{error}</div>}

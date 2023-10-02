@@ -3,6 +3,26 @@ const WorkoutModel = require("../models/workoutModel");
 
 const createWorkout = async (req, res) => {
   const { title, reps, load, sets } = req.body;
+
+  const emptyFields = [];
+
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!reps) {
+    emptyFields.push("reps");
+  }
+  if (!load) {
+    emptyFields.push("load");
+  }
+  if (!sets) {
+    emptyFields.push("sets");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ message: "Please fill all the fields", emptyFields });
+  }
   try {
     const newWorkout = await WorkoutModel.create({ title, reps, load, sets });
     res.status(200).json(newWorkout);
