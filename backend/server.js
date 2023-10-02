@@ -3,6 +3,7 @@ require("dotenv").config();
 //create an express ass
 const app = express();
 const workoutRoues = require("./routes/workoutRoutes");
+const userRoutes = require("./routes/userRoutes");
 const mongoose = require("mongoose");
 const cors = require("cors");
 app.use(cors());
@@ -15,8 +16,8 @@ app.use((req, res, next) => {
   next();
 });
 
-//use this route handler for all requests starting with the provided route
 app.use("/api/workouts", workoutRoues);
+app.use("/api/user", userRoutes);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
