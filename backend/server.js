@@ -4,6 +4,8 @@ require("dotenv").config();
 const app = express();
 const workoutRoues = require("./routes/workoutRoutes");
 const mongoose = require("mongoose");
+const cors = require("cors");
+app.use(cors());
 
 app.use(express.json());
 //set up a get route handler
@@ -18,6 +20,7 @@ app.use("/api/workouts", workoutRoues);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
+    // listen for requests
     app.listen(process.env.PORT, () => {
       console.log(
         "connected to database and server listening on port",
@@ -28,4 +31,3 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-// listen for requests
