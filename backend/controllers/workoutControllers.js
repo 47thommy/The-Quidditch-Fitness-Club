@@ -24,7 +24,15 @@ const createWorkout = async (req, res) => {
       .json({ message: "Please fill all the fields", emptyFields });
   }
   try {
-    const newWorkout = await WorkoutModel.create({ title, reps, load, sets });
+    const user_id = req.user._id;
+    console.log(user_id);
+    const newWorkout = await WorkoutModel.create({
+      title,
+      reps,
+      load,
+      sets,
+      user_id,
+    });
     res.status(200).json(newWorkout);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -32,7 +40,10 @@ const createWorkout = async (req, res) => {
 };
 const getWorkouts = async (req, res) => {
   try {
-    const workouts = await WorkoutModel.find().sort({ createdAt: -1 });
+    const user_id = req.user._id;
+    const workouts = await WorkoutModel.find({ user_id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(workouts);
   } catch (error) {
     res.status(400).json({ message: error.message });
