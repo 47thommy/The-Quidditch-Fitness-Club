@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -6,13 +7,14 @@ const Login = () => {
     password: "",
   });
 
+  const { login, error, isLoading } = useLogin();
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    login(formData);
   };
   return (
     <form onSubmit={handleSubmit} className="login">
@@ -31,7 +33,8 @@ const Login = () => {
         onChange={handleChange}
         value={formData.password}
       />
-      <button>Login</button>
+      <button disabled={isLoading}>Login</button>
+      {error && <div className="error">{error}</div>}
     </form>
   );
 };

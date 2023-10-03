@@ -14,7 +14,7 @@ const Signup = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("FormData passed to the signup:", formData);
     await signup(formData);
   };
   return (
