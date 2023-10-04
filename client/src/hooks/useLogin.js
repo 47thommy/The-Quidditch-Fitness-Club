@@ -9,13 +9,16 @@ export const useLogin = () => {
   const login = async ({ email, password }) => {
     setIsLoading(true);
     setError(null);
-    const response = await fetch("http://localhost:4000/api/user/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://the-quidditch-fitness-club.onrender.com/api/user/login",
+      {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const json = await response.json();
 

@@ -11,11 +11,14 @@ const Home = () => {
 
   useEffect(() => {
     const getWorkouts = async () => {
-      const response = await fetch("http://localhost:4000/api/workouts", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await fetch(
+        "https://the-quidditch-fitness-club.onrender.com/api/workouts",
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
       const jsonResponse = await response.json();
 
       if (response.ok) {
